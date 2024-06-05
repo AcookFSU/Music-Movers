@@ -1,0 +1,113 @@
+body {
+    background-color: white;
+    font-weight:300;
+    font-family: 'Open Sans', sans-serif;
+    color: #386641;
+    margin: 0;
+    padding: 0;
+}
+.site-header {
+    background-color: #386641;
+    color: white;
+    padding: 10px;
+}
+
+.navbar {
+    text-align: right;
+}
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.navbar ul li {
+    display: inline;
+    margin-right: 1rem;
+} 
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.8em;
+}
+.title {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+.search-wrap {
+    /* display:flex;
+    justify-content: center;
+    margin-top: 50px; */
+    width: 95%;
+    padding: 1em 1em 1em 1em;
+    max-width: 44em;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+.search-text {
+    text-align: center;
+    font-size:18px;
+}
+form {
+    margin: 0;
+}
+.search {
+    margin-top: 0.7em;
+    font-size:18px;
+    border-radius: 2px;
+    display: block;
+    position: relative;
+    height: 2.8em;
+    background-color: #fff;
+    border: 1px solid #b0b0b0;
+    padding-left: 0.75em;
+    padding-right: 6.5em;
+}
+input[type=text]{
+    font-family: 'Open Sans';
+    font-weight: 300;
+    vertical-align: middle;
+    padding: 4px;
+    border-radius: 4px 4px 4px 4px;
+    appearance: none;
+}
+.search_input {
+    font-size: 1.1em;
+    display: block;
+    width: 111%;
+    background: none;
+    outline: none;
+    border: none;
+    height: 2.4em;
+    z-index: 1;
+    position: relative;
+    top:-1px;
+}
+.site-footer {
+    background-color: #386641;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+.site-footer .foot-notes {
+    width: 80%;
+    margin: 0 auto;
+}
+.site-footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.site-footer ul li {
+    display: inline;
+    margin-left: 10px;
+}
+.site-footer ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.8em;
+}
