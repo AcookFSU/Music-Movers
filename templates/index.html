@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+    <head>
+        <meta name ="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+        <link rel="stylesheet" href="static/mystyle.css">
+        <title>Song Interps</title>        
+    </head>
+    <body>
+        <!-- header w/ signin/signup  -->      
+        <header class="site-header">
+            <div class="navbar">
+                <ul>
+                    <li><a href="#">Sign In</a></li>
+                    <li><a href="#">Sign Up</a></li>
+                </ul>
+            </div>
+            <!-- <div class="container">
+            </div> -->
+        </header>
+        <main>
+            <!-- Title -->
+            <h1 class="title">Song Interps</h1>
+            <!-- search bar -->
+            <div class="search-wrap">
+                <div class="search-text">
+                    Search for a song :
+                </div>
+                <form id="search_form" class="search" method="POST">
+                    <input class="typeahead search_input" type="text" name="f" id="f"
+                    maxlength="95" autofocus="autofocus" autocomplete="off">
+                </form>
+            </div>
+        </main>
+        <footer class="site-footer">
+            <!-- footer has about and help tabs -->
+            <div class="foot-notes">
+                <div class="foots">
+                    <ul>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/help">Help</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </body>
 </html>
