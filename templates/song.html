@@ -1,1 +1,18 @@
+<!doctype html>
+<html>
+   <body>
+      <h1>{{song['name']}}</h1>
+      By: {{song['username']}}<br>
+      {{song['lyrics']}}
+
+      <h2>Interpretations</h2>
+      {%for row in rows%}
+       <h3>{{row["username"]}}</h3>
+       {{row["interp"]}}
+
+      {%endfor%}
+      <a href = "/">Go back to home page</a>
+      
+   </body>
+</html>
 
