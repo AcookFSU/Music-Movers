@@ -1,0 +1,46 @@
+body {
+    background-image: linear-gradient( to right, #34e5eb, mediumpurple);
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+.signupsheet{
+    font-weight: bold;
+    display:flex;
+    flex-direction:column;
+    border-radius:1em;
+    background-color: white;
+    padding: 5%;
+    width: 20em;
+    margin: auto;
+    margin-top: 6em;
+    align-items: center;
+}
+button{
+    background-color:#301934;
+    color:white;
+    padding:1% 3% 1% 3%;
+    border-color:white;
+    border-radius:0.5em;
+    box-shadow: none;
+}
+h2{
+    margin:0.1em;
+    font-size: 5em;
+    color:rebeccapurple;
+    text-align:center;
+    font-family: Copperplate;
+}
+h1{
+    margin:0;
+    margin-bottom: .2em;
+    font-size:40px;
+    color:darkcyan;
+    text-align: center;
+    font-family: "Sama Devanagari";
+}
+.signupinput{
+
+}
