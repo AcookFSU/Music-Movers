@@ -1,7 +1,9 @@
+
 from urllib import request
 
 from flask import Flask, render_template, request # type: ignore
 import datetime
+
 import mysql.connector
 app = Flask(__name__)
 
@@ -29,6 +31,7 @@ def signupprocess():
         mycursor.close()
         mydb.close()
         return render_template('index.html')
+
 @app.route('/song/<songid>')
 def song(songid):
     #more here
