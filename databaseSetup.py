@@ -35,5 +35,5 @@ mycursor.execute("GRANT SELECT ON musicMovers.* TO 'viewer'")
 mycursor.execute("FLUSH PRIVILEGES")
 
 mydb.commit()
-print("Succesfully setup music movers!")
+print("Succesfully setup music movers and created roles with permissions!")
 
