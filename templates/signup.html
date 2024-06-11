@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <meta name ="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
@@ -6,6 +7,9 @@
         <title>Sign Up</title>
     </head>
     <body>
+
+    <form action = "{{ url_for('signupprocess') }}" method = "POST" class = "signupsheet">
+
     <form class = "signupsheet">
                 <h2>
                     MUSIC MOVERS
@@ -14,15 +18,21 @@
                     SIGNUP
                 </h1>
             <label>USERNAME</label>
-            <input type="text" class="signupinput" placeholder="enter here">
+
+            <input type="text" class = "signupinput" name = "username" placeholder="enter here">
             <br>
             <label>PASSWORD&nbsp</label>
-            <input type="password" class="signupinput" placeholder="enter here">
+            <input type="password" class = "signupinput" name = "password" placeholder="enter here">
+
             <br>
             <button>
                 submit
             </button>
     </form>
+
+    </form>
     </body>
 </html>
+
+
 
