@@ -1,10 +1,55 @@
-from flask import Flask, render_template # type: ignore
-import sqlite3 as sql
+from urllib import request
+
+from flask import Flask, render_template, request # type: ignore
+import datetime
+import mysql.connector
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+@app.route('/signupprocess', methods = ['GET', 'POST'])
+def signupprocess():
+    if request.method == 'POST':
+        uname = request.form['username']
+        pword = request.form['password']
+        uid = int(uname) * int(pword)
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="COP4521",
+            database="musicMovers"
+        )
+        mycursor = mydb.cursor(dictionary=True)
+        mycursor.execute(f"INSERT OR IGNORE INTO users (userID, username, password, joinDate, userType, userScore) VALUES (?,?,?,?,?,?)", (uid, uname, pword, datetime.date.today, "listener", 0))
+        mycursor.close()
+        mydb.close()
+        return render_template('index.html')
+@app.route('/song/<songid>')
+def song(songid):
+    #more here
+    #SELECT username, interp from posts INNER JOIN users ON users.userId = posts.authorUserId WHERE posts.songId = '{songId}'
+    #SELECT username, songs.name, lyrics from songs INNER JOIN users ON artistUserId = users.userId WHERE songId = '{songId}'
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="COP4521",
+        database="musicMovers"
+    )
+    mycursor = mydb.cursor(dictionary=True)
+    mycursor.execute(f"SELECT username, songs.name, lyrics from songs INNER JOIN users ON artistUserId = users.userId WHERE songId = '{songid}'")
+    song = mycursor.fetchone()
+    print(song)
+    mycursor.execute(f"SELECT username, interp from posts INNER JOIN users ON users.userId = posts.authorUserId WHERE posts.songId = '{songid}'")
+    rows=mycursor.fetchall()
+    print(rows)
+    mycursor.close()
+    mydb.close()
+    return render_template('song.html', song=song, rows=rows)
 
 if __name__ == '__main__':
     app.run(debug = True)
