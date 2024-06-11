@@ -17,15 +17,15 @@ def signupprocess():
     if request.method == 'POST':
         uname = request.form['username']
         pword = request.form['password']
-        uid = int(uname) * int(pword)
         mydb = mysql.connector.connect(
             host="localhost",
             user="root",
             password="COP4521",
             database="musicMovers"
         )
-        mycursor = mydb.cursor(dictionary=True)
-        mycursor.execute(f"INSERT OR IGNORE INTO users (userID, username, password, joinDate, userType, userScore) VALUES (?,?,?,?,?,?)", (uid, uname, pword, datetime.date.today, "listener", 0))
+        mycursor = mydb.cursor() #Add error handling later
+        mycursor.execute("INSERT INTO users (username, password, joinDate, userType, userScore) VALUES (%s,%s,%s,%s,%s)", (uname, pword, datetime.date.today(), "listener", 0))
+        mydb.commit()
         mycursor.close()
         mydb.close()
         return render_template('index.html')
