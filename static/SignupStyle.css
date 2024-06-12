@@ -1,0 +1,52 @@
+body {
+    background-image: linear-gradient( to right, #34e5eb, mediumpurple);
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+.signupsheet{
+    font-weight: bold;
+    display:flex;
+    flex-direction:column;
+    border-radius:1em;
+    background-color: white;
+    padding: 5%;
+    width: 20em;
+    margin: auto;
+    margin-top: 6em;
+    align-items: center;
+}
+button{
+    height: 30px;
+    text-align: center;
+    background-color:black;
+    color:white;
+    padding:1% 3% 1% 3%;
+    border:none;
+    box-shadow: none;
+}
+h1{
+
+    margin:0;
+    margin-top: .4em;
+    margin-bottom: .4em;
+    font-weight: bolder;
+    font-size:35px;
+    color:black;
+    text-align: center;
+}
+.logo{
+    width:225px;
+}
+.siteheader{
+    height: 30px;
+    background-color: white;
+    margin-bottom: 1em;
+}
+input{
+    background-color:lightcyan;
+    border:none;
+    color:black;
+}

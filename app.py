@@ -22,7 +22,7 @@ def signupprocess():
         mydb = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="dell2004",
+            password="COP4521",
             database="musicMovers"
         )
         mycursor = mydb.cursor() #Add error handling later
