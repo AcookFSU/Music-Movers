@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/mystyles.css">
+    <title>User Profile</title>
+    <body>
+        <header>
+            <h1>User Profile</h1>
+            <div class="user-info">
+                <h2>{{ username }}</h2>
+                <p class="profile-type">{{ user_type }}</p>
+                <p class="date"> {{ joinDate }} </p>
+            </div>
+        </header>
 
+        <main>
+            <section class="artist-songs">
+                <h2>Artist Songs</h2>
+                <ul>
+                    {% for song in artist_songs %}
+                    <li>
+                        <a href="{{ song_url }}">
+                            {{ song.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section class="user-posts">
+                <h2>User Posts</h2>
+                {% for post in user_posts %}
+                <div class="post">
+                    <a href="{{ post_url }}">
+                        <h3>{{ post.song_name }}</h3>
+                        <p>{{ post.interp }}</p>
+                    </a>
+                </div>
+                {% endfor %}
+            </section>
+        </main>
+        
+        <footer>
+            <a href="/">Go back to home page</a>
+        </footer>
+    </body>
+</html>
