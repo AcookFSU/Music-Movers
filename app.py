@@ -32,6 +32,22 @@ def signupprocess():
         mydb.close()
         return render_template('index.html')
 
+@app.route('/login', methods = ['GET', 'POST'])
+def login(): #working on
+    if request.method == 'POST':
+        uname = request.form['username']
+        pword = request.form['password']
+
+        # checks for user and if password matches
+        if uname in users and users[uname] == pword:
+            flash('Login successful')
+            return redirect(url_for('home'))
+        else:
+            flash('Invalid username or password')
+
+    return render_template('login.html')
+            
+
 @app.route('/song/<songid>')
 def song(songid):
     #more here
