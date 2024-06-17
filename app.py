@@ -70,5 +70,20 @@ def song(songid):
     mydb.close()
     return render_template('song.html', song=song, rows=rows)
 
+@app.route('/songResults', methods = ['GET', 'POST'])
+def list_songs():
+    search = request.form['f']
+
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="COP4521",
+        database="musicMovers"
+    )
+    mycursor = mydb.cursor(dictionary=True)
+    mycursor.execute(f"SELECT name, username from songs  where name like '%' + search + '%' and artistUserId = userId")
+    rows = mycursor.fetchall()
+    return render_template('songResults.html', rows=rows, search=search)
+
 if __name__ == '__main__':
     app.run(debug = True)

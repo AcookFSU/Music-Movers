@@ -1,1 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="../static/SignupStyle.css">
+</head>
+<body>
 
+    <h1>Song: {{search}}</h1>
+
+
+    <table border=1>
+        <thead>
+            <td>Song Name</td>
+            <td>Artist Id</td>
+        </thead>
+
+        <!-- print data in table for each row  -->
+        {% for row in rows %}
+            <tr>
+               <td><a href="{{url_for('song', songid=row['id'])}}" >{{row["name"]}}</a></td>
+                <td>{{row["artist_id"]}}</td>
+            </tr>
+         {% endfor %}
+    </table>
+
+    <a href = "/">Back to Home</a>
+
+</body>
+</html>
