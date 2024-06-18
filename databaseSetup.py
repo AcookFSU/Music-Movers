@@ -10,7 +10,7 @@ if not password:
     password = input()
 
 mydb = mysql.connector.connect(
-    host="localhost",
+    host="127.0.0.1",
     user=username,
     password=password,
 )

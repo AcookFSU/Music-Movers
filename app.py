@@ -1,11 +1,13 @@
-
+import os
 from urllib import request
 
 from flask import Flask, render_template, request # type: ignore
+from werkzeug.utils import secure_filename
 import datetime
 
 import mysql.connector
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = '/path/to/upload/directory'
 
 @app.route('/')
 def home():
@@ -84,6 +86,23 @@ def list_songs():
     mycursor.execute(f"SELECT name, username from songs  where name like '%' + search + '%' and artistUserId = userId")
     rows = mycursor.fetchall()
     return render_template('songResults.html', rows=rows, search=search)
+
+@app.route('/upload_profile_picture', methods=['POST'])
+def upload_profile_picture():
+    if 'profile_picture' not in request.files:
+        return 'No file part'
+    file = request.files['profile_picture']
+    if file.filename == '':
+        return 'No selected file'
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return 'File uploaded successfully'
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 if __name__ == '__main__':
     app.run(debug = True)

@@ -1,0 +1,36 @@
+body {
+    background-color: white;
+    font-weight:300;
+    font-family: 'Open Sans', sans-serif;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+.site-header {
+    background-image: linear-gradient( to right, yellow, red);
+    color: white;
+    padding: 10px;
+}
+
+.navbar {
+    text-align: right;
+}
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.navbar ul li {
+    display: inline;
+    margin-right: 1rem;
+}
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.8em;
+}
+.title {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
