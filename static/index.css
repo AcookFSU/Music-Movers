@@ -2,12 +2,12 @@ body {
     background-color: white;
     font-weight:300;
     font-family: 'Open Sans', sans-serif;
-    color: #386641;
+    color: black;
     margin: 0;
     padding: 0;
 }
 .site-header {
-    background-color: #386641;
+    background-image: linear-gradient( to right, yellow, red);
     color: white;
     padding: 10px;
 }
@@ -23,7 +23,7 @@ body {
 .navbar ul li {
     display: inline;
     margin-right: 1rem;
-} 
+}
 .navbar ul li a {
     color: white;
     text-decoration: none;
@@ -84,30 +84,13 @@ input[type=text]{
     position: relative;
     top:-1px;
 }
-.site-footer {
-    background-color: #386641;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+.logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.site-footer .foot-notes {
-    width: 80%;
-    margin: 0 auto;
-}
-.site-footer ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-.site-footer ul li {
-    display: inline;
-    margin-left: 10px;
-}
-.site-footer ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 0.8em;
+img{
+    margin: 5%;
+    width: 225px;
 }
