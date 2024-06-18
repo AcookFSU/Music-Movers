@@ -23,8 +23,8 @@ def signupprocess():
         pword = request.form['password']
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="COP4521",
+            user="testuser",
+            password="password",
             database="musicMovers"
         )
         mycursor = mydb.cursor() #Add error handling later
@@ -57,8 +57,8 @@ def song(songid):
     #SELECT username, songs.name, lyrics from songs INNER JOIN users ON artistUserId = users.userId WHERE songId = '{songId}'
     mydb = mysql.connector.connect(
         host="localhost",
-        user="root",
-        password="COP4521",
+        user="testuser",
+        password="password",
         database="musicMovers"
     )
     mycursor = mydb.cursor(dictionary=True)
@@ -78,8 +78,8 @@ def list_songs():
 
     mydb = mysql.connector.connect(
         host="localhost",
-        user="root",
-        password="COP4521",
+        user="testuser",
+        password="password",
         database="musicMovers"
     )
     mycursor = mydb.cursor(dictionary=True)
@@ -105,4 +105,4 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = True, port=8000)

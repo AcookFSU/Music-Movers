@@ -29,8 +29,12 @@ mycursor.execute("CREATE ROLE IF NOT EXISTS editor")
 mycursor.execute("CREATE ROLE IF NOT EXISTS viewer")
 
 mycursor.execute("GRANT ALL PRIVILEGES ON musicMovers.* TO 'admin'")
-mycursor.execute("GRANT SELECT, INSERT, UPDATE ON musicMovers.* TO 'editor'")
-mycursor.execute("GRANT SELECT ON musicMovers.* TO 'viewer'")
+#mycursor.execute("GRANT SELECT, INSERT, UPDATE ON musicMovers.* TO 'editor'")
+#mycursor.execute("GRANT SELECT ON musicMovers.* TO 'viewer'")
+
+mycursor.execute("CREATE USER IF NOT EXISTS 'testuser'@'localhost' IDENTIFIED BY 'password'")
+mycursor.execute("GRANT 'admin' TO 'testuser'@'localhost'")
+mycursor.execute("SET DEFAULT ROLE 'admin' TO 'testuser'@'localhost';")
 
 mycursor.execute("FLUSH PRIVILEGES")
 

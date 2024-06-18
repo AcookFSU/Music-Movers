@@ -33,5 +33,7 @@ mycursor.execute("INSERT INTO posts (songId, authorUserId, interp, postScore) VA
 mycursor.execute("INSERT INTO posts (songId, authorUserId, interp, postScore) VALUES (2, 3, 'This is an interpretation of song two.', 20)")
 mycursor.execute("INSERT INTO posts (songId, authorUserId, interp, postScore) VALUES (3, 1, 'This is an interpretation of song three.', 15)")
 
+
+
 mydb.commit()
 print("Successfully inserted test records!")
