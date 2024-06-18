@@ -22,8 +22,8 @@ def signupprocess():
         pword = request.form['password']
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="COP4521",
+            user="testuser",
+            password="password",
             database="musicMovers"
         )
         mycursor = mydb.cursor() #Add error handling later
@@ -56,8 +56,8 @@ def song(songid):
     #SELECT username, songs.name, lyrics from songs INNER JOIN users ON artistUserId = users.userId WHERE songId = '{songId}'
     mydb = mysql.connector.connect(
         host="localhost",
-        user="root",
-        password="COP4521",
+        user="testuser",
+        password="password",
         database="musicMovers"
     )
     mycursor = mydb.cursor(dictionary=True)
@@ -77,14 +77,14 @@ def list_songs():
 
     mydb = mysql.connector.connect(
         host="localhost",
-        user="root",
-        password="COP4521",
+        user="testuser",
+        password="password",
         database="musicMovers"
     )
     mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute(f"SELECT name, username from songs  where name like '%' + search + '%' and artistUserId = userId")
+    mycursor.execute(f"SELECT name, username, songId  from songs  where name like '%' + search + '%' and artistUserId = userId")
     rows = mycursor.fetchall()
-    return render_template('songResults.html', rows=rows, search=search)
+    return render_template('songResults.html', rows=rows, search=search, id=songId )
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = True, port=8000)

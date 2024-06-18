@@ -30,7 +30,7 @@
         <!-- print data in table for each row  -->
         {% for row in rows %}
             <tr>
-               <td><a href="{{url_for('song', songid=row['id'])}}" >{{row["name"]}}</a></td>
+               <td><a href="{{url_for('song', songid=row['songId'])}}" >{{row["name"]}}</a></td>
                 <td>{{row["artist_id"]}}</td>
             </tr>
          {% endfor %}

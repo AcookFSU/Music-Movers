@@ -1,18 +1,10 @@
 import mysql.connector
 
-username = ''
-password = ''
-if not username:
-    print("Enter username for local MySQL installation")
-    username = input()
-if not password:
-    print("Enter password for local MySQL installation")
-    password = input()
 
 mydb = mysql.connector.connect(
     host="localhost",
-    user=username,
-    password=password,
+    user="testuser",
+    password="password",
 )
 
 mycursor = mydb.cursor()
@@ -32,6 +24,8 @@ mycursor.execute("INSERT INTO songs (name, artistUserId, lyrics) VALUES ('Song T
 mycursor.execute("INSERT INTO posts (songId, authorUserId, interp, postScore) VALUES (1, 1, 'This is an interpretation of song one.', 10)")
 mycursor.execute("INSERT INTO posts (songId, authorUserId, interp, postScore) VALUES (2, 3, 'This is an interpretation of song two.', 20)")
 mycursor.execute("INSERT INTO posts (songId, authorUserId, interp, postScore) VALUES (3, 1, 'This is an interpretation of song three.', 15)")
+
+
 
 mydb.commit()
 print("Successfully inserted test records!")
