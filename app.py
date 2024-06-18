@@ -1,7 +1,7 @@
 
 from urllib import request
 
-from flask import Flask, render_template, request # type: ignore
+from flask import Flask, render_template, request, session, flash, redirect, url_for  # type: ignore
 import datetime
 
 import mysql.connector
@@ -38,12 +38,27 @@ def login(): #working on
         uname = request.form['username']
         pword = request.form['password']
 
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="COP4521",
+            database="musicMovers"
+        )
+
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT password FROM users WHERE username = %s", (uname,))
+        result = mycursor.fetchone()
+
         # checks for user and if password matches
-        if uname in users and users[uname] == pword:
+        if result and result[0] == pword:
             flash('Login successful')
+            session['username'] = uname
             return redirect(url_for('home'))
         else:
             flash('Invalid username or password')
+
+        mycursor.close()
+        mydb.close()
 
     return render_template('login.html')
             
