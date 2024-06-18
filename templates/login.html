@@ -3,17 +3,24 @@
 <head>
     <meta name = "viewport" content = "width = device - width, initial - scale = 1" charset = "UTF-8">
     <link rel="stylesheet" href="../static/logininStyle.css">
-    <title> Log In </title>
 </head>
 <body>
-    <h2> MUSIC MOVERS </h2>
-    <h1> Login </h1>
+    <div class = "siteheader">
+        <a href="/">
+            <button>
+                <  HOME
+            </button>
+        </a>
+    </div>
 	<form class = "loginSheet">
-		<label> Username: </label><input type = "text" name = "username">
+        <img class="logo" src="../static/blackmmlogo.jpg">
+        <h1> Log In </h1>
+		<label> Username: </label><input type = "text" name = "username" placeholder = "enter username">
         <br>
-		<label> Password: </label><input type = "text" name = "password">
+		<label> Password: </label><input type = "text" name = "password" placeholder = "enter password">
         <br>
-		<input type = "submit" value = "Login">
+		<button> SUBMIT </button>
+        <p> Don't have an account? <a href = "/signup"> Sign up </a></p>
     </form>
 </body>
 </html>
