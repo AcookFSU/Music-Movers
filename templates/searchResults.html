@@ -2,9 +2,21 @@
 <html>
 <head>
     <title>Search Results</title>
-    <link rel="stylesheet" href="../static/SignupStyle.css">
+    <link rel="stylesheet" href="../static/searchResult.css">
 </head>
 <body>
+
+    <!-- header w/ signin/signup  -->
+        <header class="site-header">
+            <div class="navbar">
+                <ul>
+                    <li><a href="signup.html">Sign Up</a></li>
+                    <li><a href="login.html">Sign In</a></li>
+                </ul>
+            </div>
+            <!-- <div class="container">
+            </div> -->
+        </header>
 
     <h1>Song: {{search}}</h1>
 
@@ -12,7 +24,7 @@
     <table border=1>
         <thead>
             <td>Song Name</td>
-            <td>Artist Id</td>
+            <td>Artist</td>
         </thead>
 
         <!-- print data in table for each row  -->
