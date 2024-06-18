@@ -31,7 +31,7 @@
         {% for row in rows %}
             <tr>
                <td><a href="{{url_for('song', songid=row['songId'])}}" >{{row["name"]}}</a></td>
-                <td>{{row["artist_id"]}}</td>
+                <td>{{row["username"]}}</td>
             </tr>
          {% endfor %}
     </table>
