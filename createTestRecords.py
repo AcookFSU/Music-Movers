@@ -1,18 +1,10 @@
 import mysql.connector
 
-username = ''
-password = ''
-if not username:
-    print("Enter username for local MySQL installation")
-    username = input()
-if not password:
-    print("Enter password for local MySQL installation")
-    password = input()
 
 mydb = mysql.connector.connect(
     host="localhost",
-    user=username,
-    password=password,
+    user="testuser",
+    password="password",
 )
 
 mycursor = mydb.cursor()
