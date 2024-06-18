@@ -83,9 +83,9 @@ def list_songs():
         database="musicMovers"
     )
     mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute(f"SELECT name, username from songs  where name like '%' + search + '%' and artistUserId = userId")
+    mycursor.execute(f"SELECT name, username, songId  from songs  where name like '%' + search + '%' and artistUserId = userId")
     rows = mycursor.fetchall()
-    return render_template('songResults.html', rows=rows, search=search)
+    return render_template('songResults.html', rows=rows, search=search, id=songId )
 
 @app.route('/upload_profile_picture', methods=['POST'])
 def upload_profile_picture():
