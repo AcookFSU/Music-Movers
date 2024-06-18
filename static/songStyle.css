@@ -1,0 +1,19 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.siteheader{
+    height: 30px;
+    background-image: linear-gradient( to right, lawngreen, deepskyblue);
+    margin:0;
+}
+button{
+    height: 30px;
+    text-align: center;
+    background-color:black;
+    color:white;
+    padding-right: 1%;
+    padding-left: 1%;
+    border:none;
+    box-shadow: none;
+}

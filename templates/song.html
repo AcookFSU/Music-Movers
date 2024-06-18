@@ -1,6 +1,18 @@
 <!doctype html>
 <html>
+    <head>
+        <meta name ="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+        <link rel="stylesheet" href="../static/songStyle.css">
+        <title>Sign Up</title>
+    </head>
    <body>
+       <div class = "siteheader">
+        <a href="/">
+            <button>
+                <  BACK HOME
+            </button>
+        </a>
+    </div>
       <h1>{{song['name']}}</h1>
       By: {{song['username']}}<br>
       {{song['lyrics']}}
@@ -11,8 +23,6 @@
        {{row["interp"]}}
 
       {%endfor%}
-      <a href = "/">Go back to home page</a>
-      
    </body>
 </html>
 
