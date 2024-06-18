@@ -19,29 +19,34 @@ body {
     align-items: center;
 }
 button{
-    background-color:#301934;
+    height: 30px;
+    text-align: center;
+    background-color:black;
     color:white;
     padding:1% 3% 1% 3%;
-    border-color:white;
-    border-radius:0.5em;
+    border:none;
     box-shadow: none;
 }
-h2{
-    margin:0.1em;
-    font-size: 5em;
-    color:rebeccapurple;
-    text-align:center;
-    font-family: Copperplate;
-}
 h1{
+
     margin:0;
-    margin-bottom: .2em;
-    font-size:40px;
-    color:darkcyan;
+    margin-top: .4em;
+    margin-bottom: .4em;
+    font-weight: bolder;
+    font-size:35px;
+    color:black;
     text-align: center;
-    font-family: "Sama Devanagari";
 }
-.signupinput{
-
+.logo{
+    width:225px;
 }
-
+.siteheader{
+    height: 30px;
+    background-color: white;
+    margin-bottom: 1em;
+}
+input{
+    background-color:lightcyan;
+    border:none;
+    color:black;
+}
