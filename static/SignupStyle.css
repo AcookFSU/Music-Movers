@@ -50,3 +50,9 @@ input{
     border:none;
     color:black;
 }
+.submitphoto{
+    display: inline-block;
+    text-align: center;
+    width: 60%;
+    border: none
+}
