@@ -7,8 +7,8 @@ body {
     padding: 0;
 }
 .site-header {
-    background-image: linear-gradient( to right, yellow, red);
-    color: white;
+    background-image: linear-gradient( to right, #e61bea, #ba94ec);
+    color: #767272;
     padding: 10px;
 }
 
@@ -33,4 +33,29 @@ body {
     text-align: center;
     padding-top: 50px;
     padding-bottom: 30px;
+}
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+    /*padding: 10px;*/
+    width: 90%;
+    border-collapse: collapse;
+    border: 1px solid;
+
+}
+
+table thead{
+    border: 1px solid black;
+    background-color: #ba94ec;
+}
+
+table td{
+    padding: 5px;
+}
+
+h1{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
