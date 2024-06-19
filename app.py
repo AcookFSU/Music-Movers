@@ -39,6 +39,21 @@ def load_user(user_id):
 def home():
     return render_template('index.html')
 
+@app.route('/user')
+def user():
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user=flask_login.current_user.username,
+        password=flask_login.current_user.password,
+        database="musicMovers"
+    )
+    userId = flask_login.current_user.id
+    mycursor = mydb.cursor(dictionary=True)
+    mycursor.execute("SELECT users.username, users.joinDate, posts.interp, users.userType FROM users INNER JOIN posts on users.userId = posts.authorUserId")
+    user=mycursor.fetchall()
+    mycursor.close()
+    mydb.close()
+    return render_template('user.html', user)
 
 @app.route('/search')
 @login_required
