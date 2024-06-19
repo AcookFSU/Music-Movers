@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name ="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+        <link rel="stylesheet" href="../static/search.css">
+        <title> Search </title>
+    </head>
+    <body>
+        <!-- header w/ signin/signup  -->
+        <header class="site-header">
+            <div class="navbar">
+                <ul>
+                    <li><a href="/user">User</a></li>
+                    <li><a href="/song">Song</a></li>
+                </ul>
+            </div>
+            <!-- <div class="container">
+            </div> -->
+        </header>
+        <main>
+            <!-- Logo -->
+            <div class="logo">
+                <IMG src="../static/blackmmlogo.jpg">
+            </div>
+            <!-- search bar -->
+            <div class="search-wrap">
+                <div class="search-text">
+                    Search for a song :
+                </div>
+                <form action = "{{ url_for('list_songs') }}" class = "search" method = "POST">
+                    <form id="search_form" class="search" method="POST">
+                        <input class="typeahead search_input" type="text" name="f" id="f"
+                        maxlength="95" autofocus="autofocus" autocomplete="off">
+                    </form>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

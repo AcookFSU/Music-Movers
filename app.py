@@ -36,6 +36,9 @@ def load_user(user_id):
 def home():
     return render_template('index.html')
 
+@app.route('/search')
+def search():
+    return render_template('search.html')
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
@@ -115,9 +118,16 @@ def list_songs():
         database="musicMovers"
     )
     mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute(f"SELECT name, username from songs  where name like '%' + search + '%' and artistUserId = userId")
+    mycursor.execute(f"SELECT users.username, songs.name, songs.songId from songs INNER JOIN users ON artistUserId = users.userId WHERE name LIKE '%{search}%'")
     rows = mycursor.fetchall()
-    return render_template('songResults.html', rows=rows, search=search)
+    mycursor.close()
+    mydb.close()
+
+    if not rows:
+        error = "No songs found."
+        return render_template('searchResults.html', error=error)
+    else:
+        return render_template('searchResults.html', rows=rows, search=search)
 
 @app.route('/upload_profile_picture', methods=['POST'])
 def upload_profile_picture():
