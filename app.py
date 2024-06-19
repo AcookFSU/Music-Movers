@@ -4,6 +4,7 @@ from urllib import request
 from flask import Flask, render_template, request, flash # type: ignore
 from werkzeug.utils import secure_filename
 import flask_login
+from flask_login import login_required
 import datetime
 
 
@@ -39,12 +40,9 @@ def load_user(user_id):
 def home():
     return render_template('index.html')
 
-@app.route('/test')#DELETE BEFORE PRODUCTION IMPORTANT DONT FORGET
-def test():
-    print(flask_login.current_user.id)
-    return render_template('index.html')
 
 @app.route('/search')
+@login_required
 def search():
     return render_template('search.html')
 @app.route('/signup')
@@ -89,13 +87,14 @@ def loginprocess():
             user = User()
             user.id = query[0]
             flask_login.login_user(user)
-            return render_template('index.html')
+            return render_template('search.html')
         else:
             flash('Login unsuccesful')
             return render_template('login.html')
         
 
 @app.route('/song/<songid>')
+@login_required
 def song(songid):
     #more here
     #SELECT username, interp from posts INNER JOIN users ON users.userId = posts.authorUserId WHERE posts.songId = '{songId}'
@@ -118,6 +117,7 @@ def song(songid):
     return render_template('song.html', song=song, rows=rows)
 
 @app.route('/songResults', methods = ['GET', 'POST'])
+@login_required
 def list_songs():
     search = request.form['f']
 
@@ -139,22 +139,6 @@ def list_songs():
     else:
         return render_template('searchResults.html', rows=rows, search=search)
 
-@app.route('/upload_profile_picture', methods=['POST'])
-def upload_profile_picture():
-    if 'profile_picture' not in request.files:
-        return 'No file part'
-    file = request.files['profile_picture']
-    if file.filename == '':
-        return 'No selected file'
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return 'File uploaded successfully'
-
-def allowed_file(filename):
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 if __name__ == '__main__':
     app.run(debug = True, port=8000)
