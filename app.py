@@ -42,12 +42,22 @@ def home():
 
 @app.route('/user')
 def user():
-    return render_template('user.html')
-
-@app.route('/test')#DELETE BEFORE PRODUCTION IMPORTANT DONT FORGET
-def test():
-    print(flask_login.current_user.id)
-    return render_template('index.html')
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user=flask_login.current_user.username,
+        password=flask_login.current_user.password,
+        database="musicMovers"
+    )
+    username = flask_login.current_user.username
+    userid = flask_login.current_user.id
+    mycursor = mydb.cursor(dictionary=True)
+    mycursor.execute(f"SELECT username, joinDate, userType FROM users WHERE username = {username}")
+    user=mycursor.fetchall()
+    mycursor.execute(f"SELECT posts.interp, songs.name FROM posts INNER JOIN songs ON posts.songId = songs.songId WHERE posts.authorUserId = {userid}")
+    interps=mycursor.fetchall()
+    mycursor.close()
+    mydb.close()
+    return render_template('user.html', user, interps)
 
 @app.route('/search')
 @login_required
@@ -91,15 +101,15 @@ def loginprocess():
         mycursor.execute(f"SELECT userId from USERS where username = '{uname}' and password = '{pword}'")
         query = mycursor.fetchone()
         if query:
-            print('Login succesful')
+            flash('Login succesful')
             user = User()
             user.id = query[0]
             flask_login.login_user(user)
             return redirect('/search')
         else:
             print('Login unsuccesful')
-            return render_template('login.html')
-
+            return redirect('/login')
+        
 
 @app.route('/song/<songid>')
 @login_required
@@ -130,6 +140,7 @@ def interpPost(songId):
     mycursor = mydb.cursor()
     mycursor.execute("INSERT INTO posts (interp, songId, authorUserId, postScore) VALUES (%s,%s, %s, %s)", (thetext, songId, flask_login.current_user.id ,0))
 @app.route('/songResults', methods = ['GET', 'POST'])
+@login_required
 def list_songs():
     search = request.form['f']
 
