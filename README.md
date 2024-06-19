@@ -9,10 +9,10 @@ When the user opens the web application, they will be directed to a home page pr
 
 
 # Libraries Used:
-datetime
-mysql.connector
-urllib
-flask 
+* datetime
+* mysql.connector
+* urllib
+* flask 
 
 
 # Obstacles 
