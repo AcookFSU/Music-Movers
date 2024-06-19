@@ -10,32 +10,28 @@ import datetime
 #SETUP FLASK
 import mysql.connector
 app = Flask(__name__)
-app.secret_key = '449259b0c773e49eb92c45cc34ffee5bb0b4b979f38b1b7d10531194b02f9086'
-app.config['UPLOAD_FOLDER'] = '/path/to/upload/directory'
-login_manager = flask_login.LoginManager()
+app.secret_key = '449259b0c773e49eb92c45cc34ffee5bb0b4b979f38b1b7d10531194b02f9086' #Required for flask_login to work without errors
+
+login_manager = flask_login.LoginManager() #Create the login manager for flask-login 
 login_manager.init_app(app)
 
-class User(flask_login.UserMixin):
+class User(flask_login.UserMixin): #Use the provided UserMixin class but add fields for username and password so we can use the credential of the logged in users to access the mySql database
     username = ""
     password = ""
     pass
 
 #ROUTES
 
-@login_manager.user_loader
+@login_manager.user_loader #Returns information of a user based on user_id
 def load_user(user_id):
     mydb = mysql.connector.connect(host="localhost", user="acctManager", password="COP4521DBAdminPassword", database="musicMovers")
     mycursor = mydb.cursor()
     mycursor.execute(f"SELECT userId, username, password from users WHERE userId = '{user_id}'")
     user = User()
     query = mycursor.fetchone()
-    print(query)
     
     if query:
         user.id, user.username, user.password = query
-    print(query[0])
-    print(query[1])
-    print(query[2])
     return user
 
 @app.route('/')
@@ -46,26 +42,24 @@ def home():
 @app.route('/search')
 @login_required
 def search():
-    print("outside of loader")
-    print(flask_login.current_user.id)
-    print(flask_login.current_user.username)
-    print(flask_login.current_user.password)
     return render_template('search.html')
+
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
+
 @app.route('/signupprocess', methods = ['GET', 'POST'])
 def signupprocess():
     if request.method == 'POST':
         uname = request.form['username']
         pword = request.form['password']
-        mydb = mysql.connector.connect(
+        mydb = mysql.connector.connect( 
             host="localhost",
-            user="acctManager",
-            password="COP4521DBAdminPassword",
+            user="acctManager",#The account manager is used here to create the user account. We cant use the user's role to connect to db because they dont exist yet
+            password="COP4521DBAdminPassword", #Manager only has permission to read users table, grant listener role, and create users
             database="musicMovers",
         )
-        mycursor = mydb.cursor() #Add error handling later
+        mycursor = mydb.cursor()#Setting up the new user
         mycursor.execute("INSERT INTO users (username, password, joinDate, userType) VALUES (%s,%s,%s,%s)", (uname, pword, datetime.date.today(), "listener"))
         mycursor.execute(f"CREATE USER IF NOT EXISTS '{uname}'@'localhost' IDENTIFIED WITH caching_sha2_password BY '{pword}'")
         mycursor.execute(f"GRANT 'viewer' TO '{uname}'@'localhost'")
@@ -85,7 +79,7 @@ def login():
 def loginprocess():
     if request.method == 'POST':
         uname = request.form['username']
-        pword = request.form['password']
+        pword = request.form['password']#Account manager is used for login here too
         mydb = mysql.connector.connect(host="localhost", user="acctManager", password="COP4521DBAdminPassword", database="musicMovers")
         mycursor = mydb.cursor()
         mycursor.execute(f"SELECT userId from USERS where username = '{uname}' and password = '{pword}'")
@@ -104,22 +98,17 @@ def loginprocess():
 @app.route('/song/<songid>')
 @login_required
 def song(songid):
-    #more here
-    #SELECT username, interp from posts INNER JOIN users ON users.userId = posts.authorUserId WHERE posts.songId = '{songId}'
-    #SELECT username, songs.name, lyrics from songs INNER JOIN users ON artistUserId = users.userId WHERE songId = '{songId}'
-    mydb = mysql.connector.connect(
+    mydb = mysql.connector.connect( #Example of our RBAC
         host="localhost",
-        user=flask_login.current_user.username,
+        user=flask_login.current_user.username, #Uses the credentials for the logged in user to connect to DBMS, listener role can only select songs, posts, users and insert on posts
         password=flask_login.current_user.password,
         database="musicMovers",
     )
     mycursor = mydb.cursor(dictionary=True)
     mycursor.execute(f"SELECT username, songs.name, lyrics from songs INNER JOIN users ON artistUserId = users.userId WHERE songId = '{songid}'")
     song = mycursor.fetchone()
-    print(song)
     mycursor.execute(f"SELECT username, interp from posts INNER JOIN users ON users.userId = posts.authorUserId WHERE posts.songId = '{songid}'")
     rows=mycursor.fetchall()
-    print(rows)
     mycursor.close()
     mydb.close()
     return render_template('song.html', song=song, rows=rows)
