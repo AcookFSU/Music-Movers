@@ -16,24 +16,32 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 class User(flask_login.UserMixin):
+    username = ""
+    password = ""
     pass
 
 #ROUTES
 
 @login_manager.user_loader
 def load_user(user_id):
-    print("USER LOADED")
-    mydb = mysql.connector.connect(host="localhost", user="testuser", password="password", database="musicMovers")
+    mydb = mysql.connector.connect(host="localhost", user="acctManager", password="COP4521DBAdminPassword", database="musicMovers")
     mycursor = mydb.cursor()
-    mycursor.execute(f"SELECT userId from users WHERE userId = '{user_id}'")
+    mycursor.execute(f"SELECT userId, username, password from users WHERE userId = '{user_id}'")
     user = User()
     query = mycursor.fetchone()
     if query:
         user.id = query[0]
+        user.username = query[1]
+        user.username = query[2]
     return user
 
 @app.route('/')
 def home():
+    return render_template('index.html')
+
+@app.route('/test')#DELETE BEFORE PRODUCTION IMPORTANT DONT FORGET
+def test():
+    print(flask_login.current_user.id)
     return render_template('index.html')
 
 @app.route('/search')
@@ -49,12 +57,14 @@ def signupprocess():
         pword = request.form['password']
         mydb = mysql.connector.connect(
             host="localhost",
-            user="testuser",
-            password="password",
+            user="acctManager",
+            password="COP4521DBAdminPassword",
             database="musicMovers"
         )
         mycursor = mydb.cursor() #Add error handling later
-        mycursor.execute("INSERT INTO users (username, password, joinDate, userType, userScore) VALUES (%s,%s,%s,%s,%s)", (uname, pword, datetime.date.today(), "listener", 0))
+        mycursor.execute("INSERT INTO users (username, password, joinDate, userType) VALUES (%s,%s,%s,%s)", (uname, pword, datetime.date.today(), "listener"))
+        mycursor.execute(f"CREATE USER IF NOT EXISTS '{uname}'@'localhost' IDENTIFIED BY '{pword}'")
+        mycursor.execute(f"GRANT 'viewer' TO '{uname}'@'localhost'")
         mydb.commit()
         mycursor.close()
         mydb.close()
@@ -70,7 +80,7 @@ def loginprocess():
     if request.method == 'POST':
         uname = request.form['username']
         pword = request.form['password']
-        mydb = mysql.connector.connect(host="localhost", user="testuser", password="password", database="musicMovers")
+        mydb = mysql.connector.connect(host="localhost", user="acctManager", password="COP4521DBAdminPassword", database="musicMovers")
         mycursor = mydb.cursor()
         mycursor.execute(f"SELECT userId from USERS where username = '{uname}' and password = '{pword}'")
         query = mycursor.fetchone()
@@ -92,8 +102,8 @@ def song(songid):
     #SELECT username, songs.name, lyrics from songs INNER JOIN users ON artistUserId = users.userId WHERE songId = '{songId}'
     mydb = mysql.connector.connect(
         host="localhost",
-        user="testuser",
-        password="password",
+        user=flask_login.current_user.username,
+        password=flask_login.current_user.password,
         database="musicMovers"
     )
     mycursor = mydb.cursor(dictionary=True)
@@ -113,8 +123,8 @@ def list_songs():
 
     mydb = mysql.connector.connect(
         host="localhost",
-        user="testuser",
-        password="password",
+        user=flask_login.current_user.username,
+        password=flask_login.current_user.password,
         database="musicMovers"
     )
     mycursor = mydb.cursor(dictionary=True)
