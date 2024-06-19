@@ -1,4 +1,3 @@
-import os
 from urllib import request
 
 from flask import Flask, render_template, request, flash, redirect # type: ignore
@@ -30,38 +29,27 @@ def load_user(user_id):
     mycursor.execute(f"SELECT userId, username, password from users WHERE userId = '{user_id}'")
     user = User()
     query = mycursor.fetchone()
+    print(query)
+    
     if query:
-        user.id = query[0]
-        user.username = query[1]
-        user.username = query[2]
+        user.id, user.username, user.password = query
+    print(query[0])
+    print(query[1])
+    print(query[2])
     return user
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/user')
-def user():
-    mydb = mysql.connector.connect(
-        host="localhost",
-        user=flask_login.current_user.username,
-        password=flask_login.current_user.password,
-        database="musicMovers"
-    )
-    username = flask_login.current_user.username
-    userid = flask_login.current_user.id
-    mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute(f"SELECT username, joinDate, userType FROM users WHERE username = {username}")
-    user=mycursor.fetchall()
-    mycursor.execute(f"SELECT posts.interp, songs.name FROM posts INNER JOIN songs ON posts.songId = songs.songId WHERE posts.authorUserId = {userid}")
-    interps=mycursor.fetchall()
-    mycursor.close()
-    mydb.close()
-    return render_template('user.html', user=user, interps=interps)
 
 @app.route('/search')
 @login_required
 def search():
+    print("outside of loader")
+    print(flask_login.current_user.id)
+    print(flask_login.current_user.username)
+    print(flask_login.current_user.password)
     return render_template('search.html')
 @app.route('/signup')
 def signup():
@@ -75,12 +63,14 @@ def signupprocess():
             host="localhost",
             user="acctManager",
             password="COP4521DBAdminPassword",
-            database="musicMovers"
+            database="musicMovers",
         )
         mycursor = mydb.cursor() #Add error handling later
         mycursor.execute("INSERT INTO users (username, password, joinDate, userType) VALUES (%s,%s,%s,%s)", (uname, pword, datetime.date.today(), "listener"))
-        mycursor.execute(f"CREATE USER IF NOT EXISTS '{uname}'@'localhost' IDENTIFIED BY '{pword}'")
+        mycursor.execute(f"CREATE USER IF NOT EXISTS '{uname}'@'localhost' IDENTIFIED WITH caching_sha2_password BY '{pword}'")
         mycursor.execute(f"GRANT 'viewer' TO '{uname}'@'localhost'")
+        mycursor.execute(f"SET DEFAULT ROLE 'viewer' TO '{uname}'@'localhost';")
+        mycursor.execute("FLUSH PRIVILEGES")
         mydb.commit()
         mycursor.close()
         mydb.close()
@@ -107,7 +97,7 @@ def loginprocess():
             flask_login.login_user(user)
             return redirect('/search')
         else:
-            print('Login unsuccesful')
+            flash('Login unsuccesful')
             return redirect('/login')
         
 
@@ -121,7 +111,7 @@ def song(songid):
         host="localhost",
         user=flask_login.current_user.username,
         password=flask_login.current_user.password,
-        database="musicMovers"
+        database="musicMovers",
     )
     mycursor = mydb.cursor(dictionary=True)
     mycursor.execute(f"SELECT username, songs.name, lyrics from songs INNER JOIN users ON artistUserId = users.userId WHERE songId = '{songid}'")
@@ -133,12 +123,7 @@ def song(songid):
     mycursor.close()
     mydb.close()
     return render_template('song.html', song=song, rows=rows)
-@app.route('/interpPost/<songid>', methods = ['GET', 'POST'])
-def interpPost(songId):
-    thetext = request.form['thetext']
-    mydb = mysql.connector.connect()
-    mycursor = mydb.cursor()
-    mycursor.execute("INSERT INTO posts (interp, songId, authorUserId, postScore) VALUES (%s,%s, %s, %s)", (thetext, songId, flask_login.current_user.id ,0))
+
 @app.route('/songResults', methods = ['GET', 'POST'])
 @login_required
 def list_songs():
@@ -148,7 +133,7 @@ def list_songs():
         host="localhost",
         user=flask_login.current_user.username,
         password=flask_login.current_user.password,
-        database="musicMovers"
+        database="musicMovers",
     )
     mycursor = mydb.cursor(dictionary=True)
     mycursor.execute(f"SELECT users.username, songs.name, songs.songId from songs INNER JOIN users ON artistUserId = users.userId WHERE name LIKE '%{search}%'")
