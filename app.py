@@ -89,13 +89,13 @@ def loginprocess():
         mycursor.execute(f"SELECT userId from USERS where username = '{uname}' and password = '{pword}'")
         query = mycursor.fetchone()
         if query:
-            flash('Login succesful')
+            print('Login succesful')
             user = User()
             user.id = query[0]
             flask_login.login_user(user)
             return render_template('index.html')
         else:
-            flash('Login unsuccesful')
+            print('Login unsuccesful')
             return render_template('login.html')
 
 
