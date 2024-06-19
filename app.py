@@ -57,7 +57,7 @@ def user():
     interps=mycursor.fetchall()
     mycursor.close()
     mydb.close()
-    return render_template('user.html', user, interps)
+    return render_template('user.html', user=user, interps=interps)
 
 @app.route('/search')
 @login_required
