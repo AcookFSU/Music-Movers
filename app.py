@@ -30,8 +30,6 @@ def load_user(user_id):
     query = mycursor.fetchone()
     if query:
         user.id = query[0]
-        print("SET USER ID TO:")
-        print(user.id)
     return user
 
 @app.route('/')
@@ -40,8 +38,6 @@ def home():
 
 @app.route('/signup')
 def signup():
-    print("LOGGED IN ALREADY:")
-    print(flask_login.current_user.id)
     return render_template('signup.html')
 @app.route('/signupprocess', methods = ['GET', 'POST'])
 def signupprocess():
@@ -68,9 +64,7 @@ def login():
 
 @app.route('/loginprocess', methods = ['GET', 'POST'])
 def loginprocess():
-    print("process triggered")
     if request.method == 'POST':
-        print("is post")
         uname = request.form['username']
         pword = request.form['password']
         mydb = mysql.connector.connect(host="localhost", user="testuser", password="password", database="musicMovers")
@@ -78,12 +72,9 @@ def loginprocess():
         mycursor.execute(f"SELECT userId from USERS where username = '{uname}' and password = '{pword}'")
         query = mycursor.fetchone()
         if query:
-            print("query exists")
             flash('Login succesful')
             user = User()
             user.id = query[0]
-            print("USER ID MADE:")
-            print(user.id)
             flask_login.login_user(user)
             return render_template('index.html')
         else:
