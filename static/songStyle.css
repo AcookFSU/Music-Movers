@@ -16,4 +16,26 @@ button{
     padding-left: 1%;
     border:none;
     box-shadow: none;
+    cursor: pointer;
+}
+.mybody{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.commentInput{
+    width: 40em;
+    height: 5em;
+    text-align: left;
+    box-sizing: border-box;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.5;
+}
+.subButton{
+    width: 40em;
+    margin-bottom: 5em;
+    cursor: pointer;
 }

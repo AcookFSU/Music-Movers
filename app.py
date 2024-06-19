@@ -7,7 +7,6 @@ import datetime
 
 import mysql.connector
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = '/path/to/upload/directory'
 
 @app.route('/')
 def home():
@@ -74,7 +73,12 @@ def song(songid):
     mycursor.close()
     mydb.close()
     return render_template('song.html', song=song, rows=rows)
-
+@app.route('/interpPost/<songid>', methods = ['GET', 'POST'])
+def interpPost(songId):
+    thetext = request.form['thetext']
+    mydb = mysql.connector.connect()
+    mycursor = mydb.cursor()
+    mycursor.execute("INSERT INTO posts (interp, songId, authorUserId, postScore) VALUES (%s,%s, %s, %s)", (thetext, songId, flask_login.current_user.id ,0))
 @app.route('/songResults', methods = ['GET', 'POST'])
 def list_songs():
     search = request.form['f']
@@ -97,22 +101,6 @@ def list_songs():
     else:
         return render_template('searchResults.html', rows=rows, search=search)
 
-@app.route('/upload_profile_picture', methods=['POST'])
-def upload_profile_picture():
-    if 'profile_picture' not in request.files:
-        return 'No file part'
-    file = request.files['profile_picture']
-    if file.filename == '':
-        return 'No selected file'
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return 'File uploaded successfully'
-
-def allowed_file(filename):
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 if __name__ == '__main__':
     app.run(debug = True, port=8000)

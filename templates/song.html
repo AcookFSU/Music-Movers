@@ -13,16 +13,36 @@
             </button>
         </a>
     </div>
-      <h1>{{song['name']}}</h1>
-      By: {{song['username']}}<br>
-      {{song['lyrics'] | safe}}
+       <div class = "mybody">
+        <h1>{{song['name']}}</h1>
+        By: {{song['username']}}<br>
+        {{song['lyrics'] | safe}}
 
-      <h2>Interpretations</h2>
-      {%for row in rows%}
-       <h3>{{row["username"]}}</h3>
-       {{row["interp"]}}
-
-      {%endfor%}
+        <h2>Interpretations</h2>
+        {%for row in rows%}
+        <h3>{{row["username"]}}</h3>
+        {{row["interp"]}}
+           <button>
+               ^
+           </button>
+           <button>
+               v
+           </button>
+        <h3>{{row["postScore"]}}</h3>
+        {%endfor%}
+        <form action = "{{ url_for('interpPost', songId=song[songId]) }}" method = "POST">
+            <div class="mybody">
+                <h1>
+                    Add your own Interpretation
+                </h1>
+                <br>
+                <textarea name = "thetext" class="commentInput" placeholder="Enter Interpretation here...."></textarea>
+                <button class="subButton">
+                    COMMENT
+                </button>
+            </div>
+        </form>
+        </div>
    </body>
 </html>
 
