@@ -1,7 +1,9 @@
 from urllib import request
 
-from flask import Flask, render_template, request # type: ignore
+from flask import Flask, render_template, request, flash, redirect # type: ignore
+from werkzeug.utils import secure_filename
 import flask_login
+from flask_login import login_required
 import datetime
 
 
@@ -37,16 +39,9 @@ def load_user(user_id):
 def home():
     return render_template('index.html')
 
-@app.route('/user')
-def user():
-    return render_template('user.html')
-
-@app.route('/test')#DELETE BEFORE PRODUCTION IMPORTANT DONT FORGET
-def test():
-    print(flask_login.current_user.id)
-    return render_template('index.html')
 
 @app.route('/search')
+@login_required
 def search():
     return render_template('search.html')
 @app.route('/signup')
@@ -91,13 +86,14 @@ def loginprocess():
             user = User()
             user.id = query[0]
             flask_login.login_user(user)
-            return render_template('index.html')
+            return redirect('/search')
         else:
             flash('Login unsuccesful')
-            return render_template('login.html')
-
+            return redirect('/login')
+        
 
 @app.route('/song/<songid>')
+@login_required
 def song(songid):
     #more here
     #SELECT username, interp from posts INNER JOIN users ON users.userId = posts.authorUserId WHERE posts.songId = '{songId}'
@@ -118,13 +114,9 @@ def song(songid):
     mycursor.close()
     mydb.close()
     return render_template('song.html', song=song, rows=rows)
-@app.route('/interpPost/<songid>', methods = ['GET', 'POST'])
-def interpPost(songId):
-    thetext = request.form['thetext']
-    mydb = mysql.connector.connect()
-    mycursor = mydb.cursor()
-    mycursor.execute("INSERT INTO posts (interp, songId, authorUserId, postScore) VALUES (%s,%s, %s, %s)", (thetext, songId, flask_login.current_user.id ,0))
+
 @app.route('/songResults', methods = ['GET', 'POST'])
+@login_required
 def list_songs():
     search = request.form['f']
 
