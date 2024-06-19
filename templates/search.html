@@ -27,9 +27,11 @@
                 <div class="search-text">
                     Search for a song :
                 </div>
-                <form id="search_form" class="search" method="POST">
-                    <input class="typeahead search_input" type="text" name="f" id="f"
-                    maxlength="95" autofocus="autofocus" autocomplete="off">
+                <form action = "{{ url_for('list_songs') }}" class = "search" method = "POST">
+                    <form id="search_form" class="search" method="POST">
+                        <input class="typeahead search_input" type="text" name="f" id="f"
+                        maxlength="95" autofocus="autofocus" autocomplete="off">
+                    </form>
                 </form>
             </div>
         </main>
