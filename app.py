@@ -39,6 +39,10 @@ def load_user(user_id):
 def home():
     return render_template('index.html')
 
+@app.route('/user')
+def user():
+    return render_template('user.html')
+
 @app.route('/test')#DELETE BEFORE PRODUCTION IMPORTANT DONT FORGET
 def test():
     print(flask_login.current_user.id)
