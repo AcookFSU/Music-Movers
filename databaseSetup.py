@@ -20,7 +20,7 @@ mycursor = mydb.cursor()
 
 mycursor.execute("CREATE DATABASE IF NOT EXISTS musicMovers")
 mycursor.execute("USE musicMovers")
-mycursor.execute("CREATE TABLE IF NOT EXISTS users (userId INT AUTO_INCREMENT PRIMARY KEY, username TEXT, password CHAR(64), joinDate DATE, userType TEXT, userScore INT)")
+mycursor.execute("CREATE TABLE IF NOT EXISTS users (userId INT AUTO_INCREMENT PRIMARY KEY, username TEXT UNIQUE, password CHAR(64), joinDate DATE, userType TEXT, userScore INT)")
 mycursor.execute("CREATE TABLE IF NOT EXISTS songs (songId INT AUTO_INCREMENT PRIMARY KEY, name TEXT, artistUserId INT , lyrics LONGTEXT)")
 mycursor.execute("CREATE TABLE IF NOT EXISTS posts (postId INT AUTO_INCREMENT PRIMARY KEY, songId INT NOT NULL, authorUserId INT NOT NULL, interp TEXT, postScore INT)")
 mydb.commit()
