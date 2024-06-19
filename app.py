@@ -1,9 +1,10 @@
 import os
 from urllib import request
 
-from flask import Flask, render_template, request # type: ignore
+from flask import Flask, render_template, request, flash, redirect # type: ignore
 from werkzeug.utils import secure_filename
 import flask_login
+from flask_login import login_required
 import datetime
 
 
@@ -49,6 +50,7 @@ def test():
     return render_template('index.html')
 
 @app.route('/search')
+@login_required
 def search():
     return render_template('search.html')
 @app.route('/signup')
@@ -93,13 +95,14 @@ def loginprocess():
             user = User()
             user.id = query[0]
             flask_login.login_user(user)
-            return render_template('index.html')
+            return redirect('/search')
         else:
             print('Login unsuccesful')
             return render_template('login.html')
 
 
 @app.route('/song/<songid>')
+@login_required
 def song(songid):
     #more here
     #SELECT username, interp from posts INNER JOIN users ON users.userId = posts.authorUserId WHERE posts.songId = '{songId}'
