@@ -11,13 +11,13 @@
         <div class="navbar">
             <ul>
                 <li><a href="user.html">User</a></li>
-                <li><a href="song.html">Song</a></li>
+                <li><a href="/">Home</a></li>
             </ul>
         </div>
     </header>
 
+    <div class = "whitebox">
     <h1>Search Results for {{search}}</h1>
-
     <table border=1>
         <thead>
             <td>Song Name</td>
@@ -36,8 +36,7 @@
      {% if error %}
         <p>{{error}}</p>
     {% endif %}
-
-    <a href = "/">Back to Home</a>
+    </div>
 
 </body>
 </html>

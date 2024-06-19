@@ -14,24 +14,22 @@
         </a>
     </div>
        <div class = "mybody">
-        <h1>{{song['name']}}</h1>
-        By: {{song['username']}}<br>
-        {{song['lyrics'] | safe}}
-
+           <div class = "whitebox">
+            <h1>{{song['name']}}</h1>
+            By: {{song['username']}}<br>
+            {{song['lyrics'] | safe}}
+            </div>
+        <div class="whitebox">
         <h2>Interpretations</h2>
         {%for row in rows%}
         <h3>{{row["username"]}}</h3>
         {{row["interp"]}}
-           <button>
-               ^
-           </button>
-           <button>
-               v
-           </button>
         <h3>{{row["postScore"]}}</h3>
         {%endfor%}
+        </div>
         <form action = "{{ url_for('interpPost', songId=song[songId]) }}" method = "POST">
             <div class="mybody">
+                <div class="whitebox">
                 <h1>
                     Add your own Interpretation
                 </h1>
@@ -40,7 +38,10 @@
                 <button class="subButton">
                     COMMENT
                 </button>
+                </div>
             </div>
+            <br>
+            <br>
         </form>
         </div>
    </body>

@@ -1,10 +1,11 @@
 body{
+    background-image: linear-gradient( to right, lawngreen, deepskyblue);
     margin: 0;
     padding: 0;
 }
 .siteheader{
     height: 30px;
-    background-image: linear-gradient( to right, lawngreen, deepskyblue);
+    background-color: black;
     margin:0;
 }
 button{
@@ -38,4 +39,15 @@ button{
     width: 40em;
     margin-bottom: 5em;
     cursor: pointer;
+}
+
+.whitebox{
+    margin-top: 2em;
+    border-radius:1em;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    padding: 1em;
 }
