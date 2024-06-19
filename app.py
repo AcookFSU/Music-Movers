@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 import flask_login
 from flask_login import login_required
 import datetime
-
+import hashlib
 
 #SETUP FLASK
 import mysql.connector
@@ -60,6 +60,7 @@ def signupprocess():
             database="musicMovers",
         )
         mycursor = mydb.cursor()#Setting up the new user
+        pword = hashlib.sha256(pword.encode(encoding="ascii")).hexdigest()
         mycursor.execute("INSERT INTO users (username, password, joinDate, userType) VALUES (%s,%s,%s,%s)", (uname, pword, datetime.date.today(), "listener"))
         mycursor.execute(f"CREATE USER IF NOT EXISTS '{uname}'@'localhost' IDENTIFIED WITH caching_sha2_password BY '{pword}'")
         mycursor.execute(f"GRANT 'viewer' TO '{uname}'@'localhost'")
@@ -80,6 +81,7 @@ def loginprocess():
     if request.method == 'POST':
         uname = request.form['username']
         pword = request.form['password']#Account manager is used for login here too
+        pword = hashlib.sha256(pword.encode(encoding="ascii")).hexdigest()
         mydb = mysql.connector.connect(host="localhost", user="acctManager", password="COP4521DBAdminPassword", database="musicMovers")
         mycursor = mydb.cursor()
         mycursor.execute(f"SELECT userId from USERS where username = '{uname}' and password = '{pword}'")
