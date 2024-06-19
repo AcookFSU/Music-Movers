@@ -15,7 +15,7 @@
     </div>
       <h1>{{song['name']}}</h1>
       By: {{song['username']}}<br>
-      {{song['lyrics']}}
+      {{song['lyrics'] | safe}}
 
       <h2>Interpretations</h2>
       {%for row in rows%}
