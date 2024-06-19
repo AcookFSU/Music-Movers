@@ -47,13 +47,16 @@ def user():
         password=flask_login.current_user.password,
         database="musicMovers"
     )
-    userId = flask_login.current_user.id
+    username = flask_login.current_user.username
+    userid = flask_login.current_user.id
     mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT users.username, users.joinDate, posts.interp, users.userType FROM users INNER JOIN posts on users.userId = posts.authorUserId")
+    mycursor.execute(f"SELECT username, joinDate, userType FROM users WHERE username = {username}")
     user=mycursor.fetchall()
+    mycursor.execute(f"SELECT interp FROM posts where authorUserId = {userid}")
+    interps=mycursor.fetchall()
     mycursor.close()
     mydb.close()
-    return render_template('user.html', user)
+    return render_template('user.html', user, interps)
 
 @app.route('/search')
 @login_required
