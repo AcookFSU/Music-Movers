@@ -30,9 +30,9 @@ mycursor.execute("CREATE ROLE IF NOT EXISTS acctManager")
 
 mycursor.execute("GRANT SELECT ON musicMovers.songs TO 'viewer'")
 mycursor.execute("GRANT SELECT, INSERT ON musicMovers.posts TO 'viewer'")
-mycursor.execute("GRANT CREATE USER ON *.* TO 'acctManager'") #new
+mycursor.execute("GRANT CREATE USER ON *.* TO 'acctManager'")
 mycursor.execute("GRANT SELECT, INSERT ON musicMovers.users TO 'acctManager'")
-mycursor.execute("GRANT 'viewer' to 'acctManager'@'localhost' WITH ADMIN OPTION")# new
+mycursor.execute("GRANT 'viewer' to 'acctManager'@'localhost' WITH ADMIN OPTION")
 
 mycursor.execute("CREATE USER IF NOT EXISTS 'acctManager'@'localhost' IDENTIFIED BY 'COP4521DBAdminPassword'")
 mycursor.execute("GRANT 'acctManager' TO 'acctManager'@'localhost'")
