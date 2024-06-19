@@ -15,8 +15,8 @@ When the user opens the web application, they will be directed to a home page pr
 * flask 
 
 
-# Obstacles 
-1. Two group members dropped the class during the last to final week of the course, so we had to regroup and redistribut the 
+# Obstacles: 
+1. Two group members dropped the class during the last to final week of the course, so we had to regroup and redistribute the work
 
 
 # Distribution of Work: 
