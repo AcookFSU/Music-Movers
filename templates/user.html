@@ -17,30 +17,17 @@
         <main>
             <div>
                 <h2> {{ username }} </h2>
-                <p class = "profile-type"> {{ user_type }} </p>
-                <p class = "date"> {{ joinDate }} </p>
+                <p class = "profile-type"> {{ user.userType }} </p>
+                <p class = "date"> {{ user.joinDate }} </p>
             </div>
-
-            <section class = "artist-songs">
-                <h2> Artist Songs </h2>
-                <ul>
-                    <p> {% for song in artist_songs %}
-                    <li>
-                        <a href = "{{ song_url }}">
-                            {{ song.name }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </section>
 
             <section class = "user-posts">
                 <h2> User Posts </h2>
-                {% for post in user_posts %}
+                {% for post in interps %}
                 <div class = "post">
                     <a href = "{{ post_url }}">
-                        <h3> {{ post.song_name }} </h3>
-                        <p> {{ post.interp }} </p>
+                        <h3> {{ post.songs.name }} </h3>
+                        <p> {{ post.posts.interp }} </p>
                     </a>
                 </div>
                 {% endfor %}
