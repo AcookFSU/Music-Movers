@@ -15,6 +15,9 @@ app.config['UPLOAD_FOLDER'] = '/path/to/upload/directory'
 def home():
     return render_template('index.html')
 
+@app.route('/search')
+def search():
+    return render_template('search.html')
 
 @app.route('/signup')
 def signup():
