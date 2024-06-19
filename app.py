@@ -1,8 +1,6 @@
-import os
 from urllib import request
 
 from flask import Flask, render_template, request # type: ignore
-from werkzeug.utils import secure_filename
 import flask_login
 import datetime
 
