@@ -8,11 +8,12 @@
     <div class = "siteheader">
         <a href="/">
             <button>
-                <  HOME
+                  HOME
             </button>
         </a>
     </div>
-	<form class = "loginSheet">
+    <form action = "{{ url_for('loginprocess') }}" method = "POST" class = "loginsheet">
+	<form class = "loginsheet">
         <img class="logo" src="../static/blackmmlogo.jpg">
         <h1> Log In </h1>
 		<label> Username: </label><input type = "text" name = "username" placeholder = "enter username">

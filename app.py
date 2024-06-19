@@ -1,13 +1,38 @@
 import os
 from urllib import request
 
-from flask import Flask, render_template, request # type: ignore
+from flask import Flask, render_template, request, flash # type: ignore
 from werkzeug.utils import secure_filename
+import flask_login
 import datetime
 
+
+#SETUP FLASK
 import mysql.connector
 app = Flask(__name__)
+app.secret_key = '449259b0c773e49eb92c45cc34ffee5bb0b4b979f38b1b7d10531194b02f9086'
 app.config['UPLOAD_FOLDER'] = '/path/to/upload/directory'
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+
+class User(flask_login.UserMixin):
+    pass
+
+#ROUTES
+
+@login_manager.user_loader
+def load_user(user_id):
+    print("USER LOADED")
+    mydb = mysql.connector.connect(host="localhost", user="testuser", password="password", database="musicMovers")
+    mycursor = mydb.cursor()
+    mycursor.execute(f"SELECT userId from users WHERE userId = '{user_id}'")
+    user = User()
+    query = mycursor.fetchone()
+    if query:
+        user.id = query[0]
+        print("SET USER ID TO:")
+        print(user.id)
+    return user
 
 @app.route('/')
 def home():
@@ -15,6 +40,8 @@ def home():
 
 @app.route('/signup')
 def signup():
+    print("LOGGED IN ALREADY:")
+    print(flask_login.current_user.id)
     return render_template('signup.html')
 @app.route('/signupprocess', methods = ['GET', 'POST'])
 def signupprocess():
@@ -34,21 +61,35 @@ def signupprocess():
         mydb.close()
         return render_template('index.html')
 
-@app.route('/login', methods = ['GET', 'POST'])
-def login(): #working on
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/loginprocess', methods = ['GET', 'POST'])
+def loginprocess():
+    print("process triggered")
     if request.method == 'POST':
+        print("is post")
         uname = request.form['username']
         pword = request.form['password']
-
-        # checks for user and if password matches
-        if uname in users and users[uname] == pword:
-            flash('Login successful')
-            return redirect(url_for('home'))
+        mydb = mysql.connector.connect(host="localhost", user="testuser", password="password", database="musicMovers")
+        mycursor = mydb.cursor()
+        mycursor.execute(f"SELECT userId from USERS where username = '{uname}' and password = '{pword}'")
+        query = mycursor.fetchone()
+        if query:
+            print("query exists")
+            flash('Login succesful')
+            user = User()
+            user.id = query[0]
+            print("USER ID MADE:")
+            print(user.id)
+            flask_login.login_user(user)
+            return render_template('index.html')
         else:
-            flash('Invalid username or password')
-
-    return render_template('login.html')
-            
+            flash('Login unsuccesful')
+            return render_template('login.html')
+        
 
 @app.route('/song/<songid>')
 def song(songid):
