@@ -52,7 +52,7 @@ def user():
     mycursor = mydb.cursor(dictionary=True)
     mycursor.execute(f"SELECT username, joinDate, userType FROM users WHERE username = {username}")
     user=mycursor.fetchall()
-    mycursor.execute(f"SELECT interp FROM posts where authorUserId = {userid}")
+    mycursor.execute(f"SELECT posts.interp, songs.name FROM posts INNER JOIN songs ON posts.songId = songs.songId WHERE posts.authorUserId = {userid}")
     interps=mycursor.fetchall()
     mycursor.close()
     mydb.close()
