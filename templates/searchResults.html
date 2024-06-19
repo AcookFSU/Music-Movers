@@ -6,20 +6,17 @@
 </head>
 <body>
 
-    <!-- header w/ signin/signup  -->
-        <header class="site-header">
-            <div class="navbar">
-                <ul>
-                    <li><a href="signup.html">Sign Up</a></li>
-                    <li><a href="login.html">Sign In</a></li>
-                </ul>
-            </div>
-            <!-- <div class="container">
-            </div> -->
-        </header>
+    <!-- header w/ user/song  -->
+    <header class="site-header">
+        <div class="navbar">
+            <ul>
+                <li><a href="user.html">User</a></li>
+                <li><a href="song.html">Song</a></li>
+            </ul>
+        </div>
+    </header>
 
-    <h1>Song: {{search}}</h1>
-
+    <h1>Search Results for {{search}}</h1>
 
     <table border=1>
         <thead>
@@ -30,11 +27,15 @@
         <!-- print data in table for each row  -->
         {% for row in rows %}
             <tr>
-               <td><a href="{{url_for('song', songid=song['songId'])}}" >{{row["name"]}}</a></td>
+               <td><a href="{{url_for('song', songid=row['songId'])}}" >{{row["name"]}}</a></td>
                 <td>{{row["username"]}}</td>
             </tr>
          {% endfor %}
     </table>
+
+     {% if error %}
+        <p>{{error}}</p>
+    {% endif %}
 
     <a href = "/">Back to Home</a>
 
