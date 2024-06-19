@@ -20,8 +20,8 @@ When the user opens the web application, they will be directed to a home page pr
 
 
 # Distribution of Work: 
-Zachary Carmack: Setting up Role Based Access; Flask login functionality; Creating Admin Roles; Setting up song page
-Alicia Cook: setting up Flask, HTML, styling for Search Results page; Flask, HTML, styling for user page; writing Read Me and report;  
-Antonio Llanes: Setting up Database, Setting up Search Page  
-Christian Riley: Setting up Flaks, HTML, Styling for signup/login page
+* Zachary Carmack: Setting up Role Based Access; Flask login functionality; Creating Admin Roles; Setting up song page
+* Alicia Cook: setting up Flask, HTML, styling for Search Results page; Flask, HTML, styling for user page; writing Read Me and report;  
+* Antonio Llanes: Setting up Database, Setting up Search Page  
+* Christian Riley: Setting up Flaks, HTML, Styling for signup/login page
 * Although we all has our specific responsibilities, there were sections that multiple people collaborated on
