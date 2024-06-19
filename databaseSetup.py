@@ -20,22 +20,23 @@ mycursor = mydb.cursor()
 
 mycursor.execute("CREATE DATABASE IF NOT EXISTS musicMovers")
 mycursor.execute("USE musicMovers")
-mycursor.execute("CREATE TABLE IF NOT EXISTS users (userId INT AUTO_INCREMENT PRIMARY KEY, username TEXT UNIQUE, password CHAR(64), joinDate DATE, userType TEXT, userScore INT)")
-mycursor.execute("CREATE TABLE IF NOT EXISTS songs (songId INT AUTO_INCREMENT PRIMARY KEY, name TEXT, artistUserId INT , lyrics LONGTEXT)")
-mycursor.execute("CREATE TABLE IF NOT EXISTS posts (postId INT AUTO_INCREMENT PRIMARY KEY, songId INT NOT NULL, authorUserId INT NOT NULL, interp TEXT, postScore INT)")
+mycursor.execute("CREATE TABLE IF NOT EXISTS users (userId INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(30) UNIQUE, password CHAR(64) NOT NULL, joinDate DATE, userType VARCHAR(15) NOT NULL)")
+mycursor.execute("CREATE TABLE IF NOT EXISTS songs (songId INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50), artistUserId INT NOT NULL, lyrics LONGTEXT)")
+mycursor.execute("CREATE TABLE IF NOT EXISTS posts (postId INT AUTO_INCREMENT PRIMARY KEY, songId INT NOT NULL, authorUserId INT NOT NULL, interp TEXT)")
 mydb.commit()
 
-mycursor.execute("CREATE ROLE IF NOT EXISTS admin")
-mycursor.execute("CREATE ROLE IF NOT EXISTS editor")
 mycursor.execute("CREATE ROLE IF NOT EXISTS viewer")
+mycursor.execute("CREATE ROLE IF NOT EXISTS acctManager")
 
-mycursor.execute("GRANT ALL PRIVILEGES ON musicMovers.* TO 'admin'")
-#mycursor.execute("GRANT SELECT, INSERT, UPDATE ON musicMovers.* TO 'editor'")
-#mycursor.execute("GRANT SELECT ON musicMovers.* TO 'viewer'")
+mycursor.execute("GRANT SELECT ON musicMovers.songs TO 'viewer'")
+mycursor.execute("GRANT SELECT, INSERT ON musicMovers.posts TO 'viewer'")
+mycursor.execute("GRANT CREATE USER ON *.* TO 'acctManager'") #new
+mycursor.execute("GRANT SELECT, INSERT ON musicMovers.users TO 'acctManager'")
+mycursor.execute("GRANT 'viewer' to 'acctManager'@'localhost' WITH ADMIN OPTION")# new
 
-mycursor.execute("CREATE USER IF NOT EXISTS 'testuser'@'localhost' IDENTIFIED BY 'password'")
-mycursor.execute("GRANT 'admin' TO 'testuser'@'localhost'")
-mycursor.execute("SET DEFAULT ROLE 'admin' TO 'testuser'@'localhost';")
+mycursor.execute("CREATE USER IF NOT EXISTS 'acctManager'@'localhost' IDENTIFIED BY 'COP4521DBAdminPassword'")
+mycursor.execute("GRANT 'acctManager' TO 'acctManager'@'localhost'")
+mycursor.execute("SET DEFAULT ROLE 'acctManager' TO 'acctManager'@'localhost';")
 
 mycursor.execute("FLUSH PRIVILEGES")
 
