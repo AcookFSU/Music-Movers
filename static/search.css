@@ -7,7 +7,7 @@ body {
     padding: 0;
 }
 .site-header {
-    background-image: linear-gradient( to right, #47ffcd, #122378);
+    background-image: linear-gradient( to right, red, #ff73ef);
     color: white;
     padding: 10px;
 }
@@ -93,22 +93,5 @@ input[type=text]{
 }
 img{
     margin: 5%;
-    width: 400px;
-}
-
-.auth-buttons {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.auth-buttons .btn {
-    display: inline-block;
-    margin: 0 10px;
-    padding: 10px 20px;
-    background-color: black;
-    color: white;
-    text-decoration: none;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    width: 300px;
 }
