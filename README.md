@@ -17,6 +17,7 @@ When the user opens the web application, they will be directed to a home page pr
 
 # Obstacles: 
 1. Two group members dropped the class during the last to final week of the course, so we had to regroup and redistribute the work
+2. We had issues setting up our individual implementations of mySQL servers 
 
 
 # Distribution of Work: 
