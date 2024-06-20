@@ -25,9 +25,9 @@
                 <h2> User Posts </h2>
                 {% for post in interps %}
                 <div class = "post">
-                    <a href = "{{ post_url }}">
-                        <h3> {{ post.songs.name }} </h3>
-                        <p> {{ post.posts.interp }} </p>
+                    <a href = {{url_for('song', songid=post.songId)}}>
+                        <h3> {{ post.name }} </h3>
+                        <p> {{ post.interp }} </p>
                     </a>
                 </div>
                 {% endfor %}

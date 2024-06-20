@@ -38,6 +38,24 @@ def load_user(user_id):
 def home():
     return render_template('index.html')
 
+@app.route('/user')
+def user():
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user=flask_login.current_user.username,
+        password=flask_login.current_user.password,
+        database="musicMovers"
+    )
+    username1 = flask_login.current_user.username
+    userid = flask_login.current_user.id
+    mycursor = mydb.cursor(dictionary=True)
+    mycursor.execute(f"SELECT username, joinDate, userType FROM users WHERE username = '{username1}'")
+    user=mycursor.fetchall()
+    mycursor.execute(f"SELECT posts.interp, songs.name, posts.songId FROM posts INNER JOIN songs ON posts.songId = songs.songId WHERE posts.authorUserId = '{userid}'")
+    interps=mycursor.fetchall()
+    mycursor.close()
+    mydb.close()
+    return render_template('user.html', user=user, interps=interps)
 
 @app.route('/search')
 @login_required
@@ -107,7 +125,7 @@ def song(songid):
         database="musicMovers",
     )
     mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute(f"SELECT username, songs.name, lyrics from songs INNER JOIN users ON artistUserId = users.userId WHERE songId = '{songid}'")
+    mycursor.execute(f"SELECT songs.songId, username, songs.name, lyrics from songs INNER JOIN users ON artistUserId = users.userId WHERE songId = '{songid}'")
     song = mycursor.fetchone()
     mycursor.execute(f"SELECT username, interp from posts INNER JOIN users ON users.userId = posts.authorUserId WHERE posts.songId = '{songid}'")
     rows=mycursor.fetchall()
@@ -115,6 +133,22 @@ def song(songid):
     mydb.close()
     return render_template('song.html', song=song, rows=rows)
 
+@app.route('/interpPost', methods = ['GET', 'POST'])
+def interpPost():
+    songid = request.args.get('songid')
+    print(songid)
+    thetext = request.form['thetext']
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user=flask_login.current_user.username,
+        password=flask_login.current_user.password,
+        database="musicMovers",
+    )
+    mycursor = mydb.cursor(dictionary=True)
+    mycursor.execute("INSERT INTO posts (interp, songId, authorUserId) VALUES (%s,%s, %s)", (thetext, int(songid), flask_login.current_user.id))
+    mydb.commit()
+    mycursor.close()
+    return redirect('/song/' + str(songid))
 @app.route('/songResults', methods = ['GET', 'POST'])
 @login_required
 def list_songs():

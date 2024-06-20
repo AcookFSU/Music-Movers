@@ -7,7 +7,7 @@
     </head>
    <body>
        <div class = "siteheader">
-        <a href="/">
+        <a href="/search">
             <button>
                 <  BACK HOME
             </button>
@@ -27,17 +27,18 @@
         <h3>{{row["postScore"]}}</h3>
         {%endfor%}
         </div>
-        <form action = "{{ url_for('interpPost', songId=song[songId]) }}" method = "POST">
+        <form action = "{{ url_for('interpPost', songid=song['songId'])}}" method = "POST">
             <div class="mybody">
                 <div class="whitebox">
                 <h1>
                     Add your own Interpretation
                 </h1>
                 <br>
-                <textarea name = "thetext" class="commentInput" placeholder="Enter Interpretation here...."></textarea>
-                <button class="subButton">
+                <label for="thetext">Description:</label>
+                <textarea id="thetext" name="thetext" class="commentInput" placeholder="Enter Interpretation here...."></textarea>
+                <input type = submit class="subButton">
                     COMMENT
-                </button>
+                </input>
                 </div>
             </div>
             <br>
